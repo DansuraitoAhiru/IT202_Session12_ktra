@@ -125,13 +125,12 @@ call GetTopScoreStudent('C00001');
 -- c6a
 create View ViewITEnrollmentDB 
 as
-select s.*, d.DeptName, c.CourseID, c.CourseName 
+select s.*, d.DeptName, c.CourseID, c.CourseName, e.score 
 from Student s
 join Enrollment e on e.StudentID = s.StudentID
 join Department d on d.DeptID = s.DeptID
 join Course c on c.CourseID = e.CourseID
 where d.DeptID = 'IT' and c.courseID = 'C00001' and e.score > 0
-group by s.StudentID, d.DeptID, c.CourseID
 with check option;
 select * from ViewITEnrollmentDB;
 
@@ -145,7 +144,8 @@ begin
 	if inoutNewScore > 10 then
 		set inoutNewScore = 10;
 	else 
-		set inoutNewScore = varStudentID.score;
+		update ViewITEnrollmentDB
+		set inoutNewScore = score;
 	end if;
 end //
 delimiter ;
