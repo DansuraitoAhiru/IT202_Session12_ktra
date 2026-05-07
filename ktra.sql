@@ -130,8 +130,9 @@ from Student s
 join Enrollment e on e.StudentID = s.StudentID
 join Department d on d.DeptID = s.DeptID
 join Course c on c.CourseID = e.CourseID
-where d.DeptID = 'IT' and c.courseID = 'C00001'
-group by s.StudentID, d.DeptID, c.CourseID;
+where d.DeptID = 'IT' and c.courseID = 'C00001' and e.score > 0
+group by s.StudentID, d.DeptID, c.CourseID
+with check option;
 select * from ViewITEnrollmentDB;
 
 -- c6b
